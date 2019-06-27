@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bsh.mapper.PostMapper">
+	<select id="getPostList" resultType="com.example.bsh.domain.PostVO" >
+		select * from post order by POST_DATE desc
+	</select>
+	
+	<insert id="postInsert" parameterType="com.example.bsh.domain.PostVO" >
+		insert into post values(POST_SEQ.nextval, #{post_title}, #{post_content}, sysdate, #{id}, #{board_code})
+	</insert>
+	
+	<update id="postUpdate" parameterType="com.example.bsh.domain.PostVO">
+		update post set post_title = #{post_title}, post_content = #{post_content}, post_date = sysdate, board_code = #{board_code}
+		where post_code = #{post_code}
+	</update>
+	
+	<delete id="postDelete" parameterType="int">
+		delete from post where post_code = #{post_code}
+	</delete>
+	
+	<select id="getDetailPage" resultType="com.example.bsh.domain.PostVO" >
+		select * from post where post_code = #{post_code}
+	</select>
+	
+	<select id="passCheck" resultType="com.example.bsh.domain.PostVO" >
+		select pw from member where id = #{id}
+	</select>
+	
+	<select id="getPostReply" resultType="com.example.bsh.domain.ReplyVO" >
+		select * from reply where post_code = #{post_code}
+	</select>
+</mapper>
